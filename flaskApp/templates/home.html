@@ -1,20 +1,20 @@
-<html lang="en">
-<head>
-    <title>Home</title>
-</head>
-<body>
-    <div class="row">
-        <div class="col-md-8">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-              {% if messages %}
-                {% for category, message in messages %}
-                  <div class="alert alert-{{ category }}">
-                    {{ message }}
-                  </div>
-                {% endfor %}
-              {% endif %}
-            {% endwith %}
+{% extends "layout.html" %}
+{% include 'navbar.html' %}
+{% include 'sidebar.html' %}
+{%  block content  %}
+    {% include 'header.html' %}
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+          <!-- /.row -->
+          <!-- Main row -->
+          <div class="row">
+    
           </div>
-    </div>
-</body>
-</html>
+          <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
+      </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+{% endblock content %}

@@ -34,6 +34,5 @@ def login():
             flash('You have been logged in!', 'success')
             return redirect(url_for('home'))
         else:
-            print("ddd")
             flash('Login Unsuccessful. Please check username and password', 'danger')
     return render_template('login.html', title='Login', form=form)
