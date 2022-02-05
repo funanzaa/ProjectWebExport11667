@@ -26,6 +26,28 @@ class Database:
         """
         cur.execute(s) # Execute the SQL
         list_Plan = cur.fetchall()
+        cur.close()
+        conn.close()
         return list_Plan
 
+    def selectOPTYPE(self):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = 'select * from optype'
+        cur.execute(sql) # Execute the SQL
+        list_optype = cur.fetchall()
+        cur.close()
+        conn.close()
+        return list_optype
+
+    def selectDescPlan(self,plan_id):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+        select distinct(description),map_optype from plan where plan_id = '{}'
+        """.format(plan_id)
+        # print(sql)
+        cur.execute(sql) # Execute the SQL
+        list_DescPlan = cur.fetchall()
+        return list_DescPlan
     

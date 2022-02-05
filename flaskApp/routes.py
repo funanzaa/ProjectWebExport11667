@@ -56,3 +56,10 @@ def contactPlan():
     db = Database()
     list_plan = db.selectPlan()
     return render_template('contact_plan.html',title = 'จับคู่สิทธิ์การรักษา', list_plans = list_plan)
+
+@app.route("/edit_contactPlan/<id>", methods=['GET', 'POST'])
+def edit_contactPlan(id):
+    db = Database()
+    list_optype = db.selectOPTYPE()
+    descPlan = db.selectDescPlan(id)
+    return render_template('edit_contactPlan.html', list_optypes = list_optype, descplans = descPlan[0][0])
