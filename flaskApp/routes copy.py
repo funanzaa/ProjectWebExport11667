@@ -60,7 +60,3 @@ def highCost():
     student = Student.query.paginate(page= page, per_page= 15)
     # students = Student.query.all()
     return render_template('highcost.html',title='รายการ NHSO High Cost',student=student)
-
-@app.route("/contactPlan")
-def contactPlan():
-    return render_template('contact_plan.html',title='สิทธิ์การรักษา')
