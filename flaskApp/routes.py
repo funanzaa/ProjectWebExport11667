@@ -1,20 +1,10 @@
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskApp.forms import  LoginForm
-from flaskApp import app, db
+from flaskApp import app
 from flaskApp.models import Student
+from flaskApp.database import Database
 # import psycopg2
 # import psycopg2.extras
-
-
-# DB_HOST = "localhost"
-# DB_NAME = "imed_db"
-# DB_USER = "postgres"
-# DB_PASS = 'postgres'
-
-
-# conn = psycopg2.connect(dbname = DB_NAME, user = DB_USER, password = DB_PASS, host = DB_HOST )
-
-
 
 posts = [
     {
@@ -63,4 +53,6 @@ def highCost():
 
 @app.route("/contactPlan")
 def contactPlan():
-    return render_template('contact_plan.html',title='สิทธิ์การรักษา')
+    db = Database()
+    list_plan = db.selectPlan()
+    return render_template('contact_plan.html',title = 'จับคู่สิทธิ์การรักษา', list_plans = list_plan)
