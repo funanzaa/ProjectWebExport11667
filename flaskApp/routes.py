@@ -62,4 +62,10 @@ def edit_contactPlan(id):
     db = Database()
     list_optype = db.selectOPTYPE()
     descPlan = db.selectDescPlan(id)
-    return render_template('edit_contactPlan.html', list_optypes = list_optype, descplans = descPlan[0][0])
+    if request.method == 'POST':
+        id_optype = request.form["optype"]
+        db.updatePlan(id_optype, id)
+        list_plan = db.selectPlan()
+        return render_template('contact_plan.html',title = 'จับคู่สิทธิ์การรักษา', list_plans = list_plan)
+    return render_template('edit_contactPlan.html', list_optypes = list_optype, descplans = descPlan[0][0], id_plan = id)
+

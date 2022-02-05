@@ -44,10 +44,21 @@ class Database:
         conn = self.get_db_connection()
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         sql = """
-        select distinct(description),map_optype from plan where plan_id = '{}'
+        select distinct(description),map_optype,plan_id from plan where plan_id = '{}'
         """.format(plan_id)
-        # print(sql)
         cur.execute(sql) # Execute the SQL
         list_DescPlan = cur.fetchall()
         return list_DescPlan
+
+    def updatePlan(self,id_optype,id_plan):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+        update plan set map_optype = '{}' where plan_id = '{}'
+        """.format(id_optype,id_plan)
+        cur.execute(sql) # Execute the SQL
+        conn.commit()
+        print("update Plan OK")
+        cur.close()
+        conn.close()
     

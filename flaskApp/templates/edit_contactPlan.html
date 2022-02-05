@@ -29,14 +29,14 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form">
+              <form action="#" method="post">
                 <div class="card-body">
                       <!-- select -->
                       <div class="form-group">
                         <label>OPTYPE</label>
-                        <select class="form-control">
+                        <select class="form-control" name="optype">
                           {% for row in list_optypes %}
-                          <option>{{ row[0] }} | {{ row[1] }}</option>
+                          <option value="{{ row[0] }}">{{ row[0] }} | {{ row[1] }}</option>
                           {% endfor %}
                         </select>
                       </div>
@@ -44,7 +44,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary" value="submit">Submit</button>
                 </div>
               </form>
             </div>

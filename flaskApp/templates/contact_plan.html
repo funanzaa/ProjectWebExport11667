@@ -39,7 +39,11 @@
                     <tr>
                       <td>{{ row[1] }}</td>
                       <td>{{ row[2] }}</td>
-                      <td>{{ row[3] }}</td>
+                      {% if row[3] == 'ไม่ได้จับคู่' %}
+                        <td class="text-danger"> {{ row[3] }}</td>
+                        {% else %}
+                        <td class="text-success"> {{ row[3] }}</td>
+                      {% endif %}  
                       <td>
                         <a href="/edit_contactPlan/{{ row[0] }}" class="btn btn-warning">Edit</a>
                       </td>
