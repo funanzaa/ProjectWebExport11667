@@ -61,4 +61,26 @@ class Database:
         print("update Plan OK")
         cur.close()
         conn.close()
+
+    def selectItem(self):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+         select item_code, common_name, item_id,case when map_highcost = true then 'True' else 'False' end as map_highcost from item where  active = '1'
+        """
+        cur.execute(sql) # Execute the SQL
+        list_Item = cur.fetchall()
+        return list_Item
+
+    def updateHighCost(self, id, status):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+        update item set "map_highcost" = '{}' where item_id = '{}'
+        """.format(status, id)
+        cur.execute(sql) # Execute the SQL
+        conn.commit()
+        print("update updateHighCost OK")
+        cur.close()
+        conn.close()
     

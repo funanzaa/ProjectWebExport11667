@@ -171,5 +171,54 @@
     });
   });
 </script>
+<!-- highcost -->
+<script>
+  function highCost(checkboxElem,x) {
+    // var checkBox = document.getElementById("highCost");
+
+    console.log(x)
+    if (checkboxElem.checked) {
+      var entry = {
+      id: x,
+      status: true
+      }
+      fetch(`${window.origin}/highCostID/`,{
+        method: "POST",
+        credentials:"include",
+        body: JSON.stringify(entry),
+        cache:"no-cache",
+        headers: new Headers({
+          "content-type":"application/json"
+        })
+      })
+      .then(function(response) {
+        if (response.status !== 200) {
+          console.log(`Response status was not 200: ${response.status}`);
+          return;
+        }
+
+        response.json().then(function(data){
+          console.log(data)
+        })
+      })
+  } else {
+    var entry2 = {
+      id: x,
+      status: false
+      }
+    fetch(`${window.origin}/highCostID/`,{
+        method: "POST",
+        credentials:"include",
+        body: JSON.stringify(entry2),
+        cache:"no-cache",
+        headers: new Headers({
+          "content-type":"application/json"
+        })
+      })
+  }
+  }
+</script>
+
+<!-- ./ highcost -->
 </body>
 </html>

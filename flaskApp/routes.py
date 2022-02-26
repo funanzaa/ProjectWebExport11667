@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request, abort
+from flask import render_template, url_for, flash, redirect, request, abort, jsonify, make_response
 from flaskApp.forms import  LoginForm
 from flaskApp import app
 from flaskApp.models import Student
@@ -40,16 +40,31 @@ def login():
             pass
     return render_template('login.html', title='Login', form=form)
 
-@app.route("/highCost")
+# HighCost
+@app.route("/highCost" , methods=['GET', 'POST'])
 def highCost():
-    # cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    # s = "select * from NHSO_OP_HIGH_COST"
-    # cur.execute(s) # Execute the SQL
-    # list_highcost = cur.fetchall()
-    page = request.args.get('page', 1, type=int)
-    student = Student.query.paginate(page= page, per_page= 15)
-    # students = Student.query.all()
-    return render_template('highcost.html',title='รายการ NHSO High Cost',student=student)
+    db = Database()
+    list_Item = db.selectItem()
+    return render_template('highcost.html',title='รายการ NHSO High Cost', list_Items = list_Item)
+
+# Update HighCost
+@app.route("/highCostID/" , methods=['GET', 'POST'])
+def highCostID():
+    db = Database()
+    
+    req = request.get_json()
+    
+    _id = req.get('id')
+    _status = req.get('status')
+
+    db.updateHighCost(_id, _status)
+
+    res = make_response(jsonify({"message":"JSON received"}), 200)
+        
+    return res
+
+
+
 
 @app.route("/contactPlan")
 def contactPlan():
