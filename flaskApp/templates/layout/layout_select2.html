@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html>
+    {% block head %}
+    {% endblock head %}
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  {% block navbar  %}
+  {% endblock navbar %}
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  {% block sidebar  %}
+  {% endblock sidebar %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    {%  block header  %}
+    {% endblock header %}
+
+    <!-- Main content -->
+    {%  block content  %}
+    {% endblock content %}
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  {%  block footer  %}
+  {% endblock footer %}
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+{%  block script_edit_billing  %}
+{% endblock script_edit_billing %}
+</body>
+</html>

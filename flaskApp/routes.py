@@ -63,9 +63,9 @@ def highCostID():
         
     return res
 
+# ./ HighCost
 
-
-
+#  contactPlan
 @app.route("/contactPlan")
 def contactPlan():
     db = Database()
@@ -81,6 +81,22 @@ def edit_contactPlan(id):
         id_optype = request.form["optype"]
         db.updatePlan(id_optype, id)
         list_plan = db.selectPlan()
-        return render_template('contact_plan.html',title = 'จับคู่สิทธิ์การรักษา', list_plans = list_plan)
-    return render_template('edit_contactPlan.html', list_optypes = list_optype, descplans = descPlan[0][0], id_plan = id)
+        return redirect(url_for('contactPlan'))
+    return render_template('edit_contactPlan.html',title = 'จับคู่สิทธิ์การรักษา', list_optypes = list_optype, descplans = descPlan[0][0], id_plan = descPlan[0][1])
+
+# map base_billing_group
+@app.route("/billing_group/", methods=['GET', 'POST'])
+def billing_group():
+    db = Database()
+    list_Item_opd = db.selectBillingGroupOPD()
+    list_Item_ipd = db.selectBillingGroupIPD()
+    return render_template('billing_group.html',title='ใบเสร็จการรักษา', list_Items = list_Item_opd, list_ItemsIPD = list_Item_ipd )
+
+@app.route("/edit_billing_group/<id>", methods=['GET', 'POST'])
+def edit_billing_group(id):
+    db = Database()
+    list_Chrgitem = db.selectMapChrgitem()
+    list_ChrgitemEdit = db.selectBillingEdit(id)
+    # print(list_ChrgitemEdit)
+    return render_template('pages/edit_billing_group.html',title = 'ใบเสร็จการรักษา', list_Chrgitems = list_Chrgitem,list_ChrgitemEdits = list_ChrgitemEdit)
 

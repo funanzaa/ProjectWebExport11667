@@ -44,9 +44,15 @@
                         {% else %}
                         <td class="text-success"> {{ row[3] }}</td>
                       {% endif %}  
+                      {% if row[3] == 'ไม่ได้จับคู่' %}
                       <td>
-                        <a href="/edit_contactPlan/{{ row[0] }}" class="btn btn-warning">Edit</a>
+                        <a href="/edit_contactPlan/{{ row[0] }}" class="btn btn-success">จับคู่</a>
                       </td>
+                      {% else %}
+                        <td>
+                          <a href="/edit_contactPlan/{{ row[0] }}" class="btn btn-warning">แก้ไข</a>
+                        </td>
+                      {% endif %} 
                     </tr>
                       {% endfor %}
                     </tbody>

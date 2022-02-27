@@ -1,0 +1,42 @@
+
+{% block contact %}
+    <section class="content">
+        <div class="container-fluid">
+          <!-- SELECT2 EXAMPLE -->
+          <div class="card card-default">
+            <div class="card-header">
+              <h3 class="card-title">OPD : {{ list_ChrgitemEdits[0][1] }} </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Chrgitem</label>
+                    <select class="form-control select2" style="width: 100%;">
+                      {% for row in list_Chrgitems %}
+                          {% if row[0] == list_ChrgitemEdits[0][0] %}
+                          <option selected="selected" value="{{ row[0]  }}"> {{ row[0]  }} | {{ row[1] }} </option>
+                          {% else %}
+                          <option value="{{ row[0]  }}"> {{ row[0]  }} | {{ row[1] }} </option>
+                          {% endif %}
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <!-- /.form-group -->
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+              </div>
+              <!-- /.row -->
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary" value="submit">Submit</button>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div><!-- /.container-fluid -->
+      </section>
+{% endblock contact %}

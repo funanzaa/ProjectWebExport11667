@@ -70,6 +70,8 @@ class Database:
         """
         cur.execute(sql) # Execute the SQL
         list_Item = cur.fetchall()
+        cur.close()
+        conn.close()
         return list_Item
 
     def updateHighCost(self, id, status):
@@ -83,4 +85,62 @@ class Database:
         print("update updateHighCost OK")
         cur.close()
         conn.close()
+
+    # Map billingGroup 
+
+    def selectBillingGroupOPD(self):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+        select base_billing_group_id,code,description_th,map_chrgitem.id
+        ,case when (right(trim(map_chrgitem.id),1) is not null or right(trim(map_chrgitem.id),1) <> '') and right(trim(map_chrgitem.id),1) = '2' then map_chrgitem."name" || '(ส่วนเกิน)'  else map_chrgitem."name" end 
+        from base_billing_group 
+        left join map_chrgitem on base_billing_group.map_chrgitem_opd = map_chrgitem.id
+        """
+        cur.execute(sql) # Execute the SQL
+        list_Item = cur.fetchall()
+        cur.close()
+        conn.close()
+        return list_Item
+
+    def selectBillingGroupIPD(self):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+        select base_billing_group_id,code,description_th,map_chrgitem.id
+        ,case when (right(trim(map_chrgitem.id),1) is not null or right(trim(map_chrgitem.id),1) <> '') and right(trim(map_chrgitem.id),1) = '2' then map_chrgitem."name" || '(ส่วนเกิน)'  else map_chrgitem."name" end 
+        from base_billing_group 
+        left join map_chrgitem on base_billing_group.map_chrgitem_ipd = map_chrgitem.id
+        """
+        cur.execute(sql) # Execute the SQL
+        list_Item = cur.fetchall()
+        cur.close()
+        conn.close()
+        return list_Item
+
+    def selectMapChrgitem(self):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+        select id
+        ,case when right(id,1) = '2' then "name"|| '(ส่วนเกิน)' else "name" end as "name"
+        from map_chrgitem
+        """
+        cur.execute(sql) # Execute the SQL
+        list_Item = cur.fetchall()
+        cur.close()
+        conn.close()
+        return list_Item
+
+    def selectBillingEdit(self, id):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+        select map_chrgitem_opd,description_th from base_billing_group where base_billing_group_id = '{}'
+        """.format(id)
+        cur.execute(sql) # Execute the SQL
+        list_Item = cur.fetchall()
+        cur.close()
+        conn.close()
+        return list_Item
     
