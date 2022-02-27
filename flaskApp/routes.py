@@ -97,6 +97,14 @@ def edit_billing_group(id):
     db = Database()
     list_Chrgitem = db.selectMapChrgitem()
     list_ChrgitemEdit = db.selectBillingEdit(id)
-    # print(list_ChrgitemEdit)
+    if request.method == 'POST':
+        id_chrgitem = request.form["chrgitem"]
+        db.UpdateBillingGroup(id_chrgitem, id)
+        return redirect(url_for('billing_group'))
     return render_template('pages/edit_billing_group.html',title = 'ใบเสร็จการรักษา', list_Chrgitems = list_Chrgitem,list_ChrgitemEdits = list_ChrgitemEdit)
 
+@app.route("/delete_billing_group/<id>", methods=['GET', 'POST'])
+def delete_billing_group(id):
+    db = Database()
+    db.UpdateBillingGroup('', id)
+    return redirect(url_for('billing_group'))

@@ -144,3 +144,14 @@ class Database:
         conn.close()
         return list_Item
     
+    def UpdateBillingGroup(self, chrgitem_id, base_billing_group_id):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+        update base_billing_group set map_chrgitem_opd = '{}' where base_billing_group_id = '{}'
+        """.format(chrgitem_id, base_billing_group_id)
+        cur.execute(sql) # Execute the SQL
+        conn.commit()
+        print("UpdateBillingGroup OK")
+        cur.close()
+        conn.close()
