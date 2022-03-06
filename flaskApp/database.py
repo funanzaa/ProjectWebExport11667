@@ -107,6 +107,7 @@ class Database:
         sql = """
         select base_billing_group_id,code,description_th,map_chrgitem.id
         ,case when (right(trim(map_chrgitem.id),1) is not null or right(trim(map_chrgitem.id),1) <> '') and right(trim(map_chrgitem.id),1) = '2' then map_chrgitem."name" || '(ส่วนเกิน)'  else map_chrgitem."name" end 
+        ,'opd' as type_name
         from base_billing_group 
         left join map_chrgitem on base_billing_group.map_chrgitem_opd = map_chrgitem.id
         """
@@ -122,6 +123,7 @@ class Database:
         sql = """
         select base_billing_group_id,code,description_th,map_chrgitem.id
         ,case when (right(trim(map_chrgitem.id),1) is not null or right(trim(map_chrgitem.id),1) <> '') and right(trim(map_chrgitem.id),1) = '2' then map_chrgitem."name" || '(ส่วนเกิน)'  else map_chrgitem."name" end 
+        ,'ipd' as type_name
         from base_billing_group 
         left join map_chrgitem on base_billing_group.map_chrgitem_ipd = map_chrgitem.id
         """
@@ -145,26 +147,43 @@ class Database:
         conn.close()
         return list_Item
 
-    def selectBillingEdit(self, id):
+    def selectBillingEdit(self, id , typename):
         conn = self.get_db_connection()
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        sql = """
-        select map_chrgitem_opd,description_th from base_billing_group where base_billing_group_id = '{}'
-        """.format(id)
+        
+        if typename == 'opd':
+            sql = """
+            select map_chrgitem_opd,description_th from base_billing_group where base_billing_group_id = '{}'
+            """.format(id)
+        elif typename == 'ipd':
+            sql = """
+            select map_chrgitem_ipd,description_th from base_billing_group where base_billing_group_id = '{}'
+            """.format(id)
+
         cur.execute(sql) # Execute the SQL
         list_Item = cur.fetchall()
         cur.close()
         conn.close()
         return list_Item
     
-    def UpdateBillingGroup(self, chrgitem_id, base_billing_group_id):
+    def UpdateBillingGroup(self, chrgitem_id, base_billing_group_id, typename):
         conn = self.get_db_connection()
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-        sql = """
-        update base_billing_group set map_chrgitem_opd = '{}' where base_billing_group_id = '{}'
-        """.format(chrgitem_id, base_billing_group_id)
-        cur.execute(sql) # Execute the SQL
-        conn.commit()
-        print("UpdateBillingGroup OK")
-        cur.close()
-        conn.close()
+        if typename == 'opd':
+            sql = """
+            update base_billing_group set map_chrgitem_opd = '{}' where base_billing_group_id = '{}'
+            """.format(chrgitem_id, base_billing_group_id)
+            cur.execute(sql) # Execute the SQL
+            conn.commit()
+            print("UpdateBillingGroup OK OPD")
+            cur.close()
+            conn.close()
+        elif typename == 'ipd':
+            sql = """
+            update base_billing_group set map_chrgitem_ipd = '{}' where base_billing_group_id = '{}'
+            """.format(chrgitem_id, base_billing_group_id)
+            cur.execute(sql) # Execute the SQL
+            conn.commit()
+            print("UpdateBillingGroup OK IPD")
+            cur.close()
+            conn.close()
