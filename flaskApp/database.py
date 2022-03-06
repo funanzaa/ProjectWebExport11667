@@ -62,6 +62,19 @@ class Database:
         cur.close()
         conn.close()
 
+    def deleteMapPlan(self,id_plan):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+        update plan set map_optype = null where plan_id = '{}'
+        """.format(id_plan)
+        cur.execute(sql) # Execute the SQL
+        conn.commit()
+        print("update Plan OK")
+        cur.close()
+        conn.close()
+
+
     def selectItem(self):
         conn = self.get_db_connection()
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)

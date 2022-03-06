@@ -84,6 +84,12 @@ def edit_contactPlan(id):
         return redirect(url_for('contactPlan'))
     return render_template('edit_contactPlan.html',title = 'จับคู่สิทธิ์การรักษา', list_optypes = list_optype, descplans = descPlan[0][0], id_plan = descPlan[0][1])
 
+@app.route("/delete_contactPlan/<id>", methods=['GET', 'POST'])
+def delete_contactPlan(id):
+    db = Database()
+    db.deleteMapPlan(id)
+    return redirect(url_for('contactPlan'))
+
 # map base_billing_group
 @app.route("/billing_group/", methods=['GET', 'POST'])
 def billing_group():
