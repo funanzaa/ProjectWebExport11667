@@ -109,8 +109,8 @@ def edit_billing_group(typename, id):
         return redirect(url_for('billing_group'))
     return render_template('pages/edit_billing_group.html',title = 'ใบเสร็จการรักษา', list_Chrgitems = list_Chrgitem,list_ChrgitemEdits = list_ChrgitemEdit,nameHeader = typename)
 
-@app.route("/delete_billing_group/<id>", methods=['GET', 'POST'])
-def delete_billing_group(id):
+@app.route("/delete_billing_group/<typename>/<id>", methods=['GET', 'POST'])
+def delete_billing_group(typename, id):
     db = Database()
-    db.UpdateBillingGroup('', id)
+    db.UpdateBillingGroup('', id, typename)
     return redirect(url_for('billing_group'))

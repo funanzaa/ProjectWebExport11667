@@ -167,6 +167,7 @@ class Database:
         return list_Item
     
     def UpdateBillingGroup(self, chrgitem_id, base_billing_group_id, typename):
+        print( chrgitem_id, base_billing_group_id, typename)
         conn = self.get_db_connection()
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         if typename == 'opd':
