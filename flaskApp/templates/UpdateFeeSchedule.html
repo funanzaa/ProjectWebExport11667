@@ -1,0 +1,67 @@
+{% extends "base_2.html" %}
+{%  block content  %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>จับคู่ {{ title }}</h1>
+          </div>
+          <!-- <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">{{ title }}</li>
+            </ol>
+          </div> -->
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>รหัส</th>
+                      <th>รายละเอียด</th>
+                      <th>ราคาขาย OPD</th>
+                      <th> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {% for row in ListFeeSchedule %}
+                    <tr>
+                      <td>{{ row[0] }}</td>
+                      <td>{{ row[1] }}</td>
+                      <td>{{ row[3] }}</td> 
+                      <td class="text-center">
+                        <div class="btn-group btn-group-sm">
+                          <a href="/UpdateMatchFeeSchedule/{{ row[4] }}/{{ GetCommonNameItem[0][2] }}" class="btn btn-success"><i class="fas fa-plus"></i></a>
+                        </div>
+                      </td>
+                    </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            
+            <!-- /.col -->
+          </div>
+          
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+</div>
+    <!-- /.content -->
+  <!-- /.content-wrapper -->
+{% endblock content %}

@@ -242,3 +242,77 @@ class Database:
         print("updateNhsoLabFu OK ")
         cur.close()
         conn.close()
+
+# Free Schedule
+
+    def ListFeeSchedule(self):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+        select pcp_item_code, pcp_item_desc, pcp_cdg_opd, pcp_cdg_opd_price,pcp_item_rn
+        from pcp_item 
+        order by pcp_item_code 
+        """
+        cur.execute(sql) # Execute the SQL
+        ListFeeSchedule = cur.fetchall()
+        cur.close()
+        conn.close()
+        return ListFeeSchedule
+
+    
+    def ListIsMatchFeeSchedule(self):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+        -- Is match
+        select item_code,common_name,pcp_item.pcp_item_code,pcp_item.pcp_item_desc,pcp_item.pcp_cdg_opd_price,item_id
+        from item 
+        left join pcp_item on item.pcp_item_rn = pcp_item.pcp_item_rn
+        where item.pcp_item_rn is not null and item.active = '1'
+        """
+        cur.execute(sql) # Execute the SQL
+        ListIsMatchFeeSchedule = cur.fetchall()
+        cur.close()
+        conn.close()
+        return ListIsMatchFeeSchedule
+
+    def ListNotMatchFeeSchedule(self):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+        -- Not match
+        select item_code,common_name,item_id 
+        from item 
+        where item.pcp_item_rn is null and item.active = '1'
+        """
+        cur.execute(sql) # Execute the SQL
+        ListIsMatchFeeSchedule = cur.fetchall()
+        cur.close()
+        conn.close()
+        return ListIsMatchFeeSchedule
+
+    def GetCommonNameItem(self, item_id):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+            select common_name,item_code,item_id from item where item_id = '{}'
+        """.format(item_id)
+        cur.execute(sql) # Execute the SQL
+        GetCommonNameItem = cur.fetchall()
+        cur.close()
+        conn.close()
+        return GetCommonNameItem
+
+    def UpdateMatchFeeSchedule(self, pcp_item_rn, item_id):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+            update item set pcp_item_rn = '{}', pcp_item_update_date = now() where item_id = '{}'
+        """.format(pcp_item_rn, item_id)
+        cur.execute(sql) # Execute the SQL
+        conn.commit()
+        print("UpdateMatchFeeSchedule OK ")
+        cur.close()
+        conn.close()
+
+

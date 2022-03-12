@@ -139,3 +139,33 @@ def delete_mapLapFu(id):
     db = Database()
     db.updateNhsoLabFu(id, '')
     return redirect(url_for('mapLapFu'))
+
+
+#  FeeSchedule
+@app.route("/ListFeeSchedule", methods=['GET', 'POST'])
+def ListFeeSchedule():
+    db = Database()
+    ListFeeSchedule = db.ListFeeSchedule()
+    return render_template('FeeSchedule.html',title = 'รายการ FeeSchedule', ListFeeSchedule = ListFeeSchedule)
+
+
+@app.route("/ListMatchFeeSchedule", methods=['GET', 'POST'])
+def ListMatchFeeSchedule():
+    db = Database()
+    ListIsMatchFeeSchedule = db.ListIsMatchFeeSchedule()
+    ListNotMatchFeeSchedule = db.ListNotMatchFeeSchedule()
+    return render_template('ListMatchFeeSchedule.html',title='จับคู่ FeeSchedule', list_Items = ListIsMatchFeeSchedule, ListNotMatchFeeSchedule = ListNotMatchFeeSchedule )
+
+
+@app.route("/UpdateFeeSchedule/<id>", methods=['GET', 'POST'])
+def UpdateFeeSchedule(id):
+    db = Database()
+    ListFeeSchedule = db.ListFeeSchedule()
+    GetCommonNameItem = db.GetCommonNameItem(id)
+    return render_template('UpdateFeeSchedule.html',title = GetCommonNameItem[0][0], ListFeeSchedule = ListFeeSchedule, GetCommonNameItem = GetCommonNameItem)
+
+@app.route("/UpdateMatchFeeSchedule/<item_rn>/<id>", methods=['GET', 'POST'])
+def UpdateMatchFeeSchedule(item_rn, id):
+    db = Database()
+    db.UpdateMatchFeeSchedule(item_rn, id)
+    return redirect(url_for('ListMatchFeeSchedule'))
