@@ -188,3 +188,57 @@ class Database:
             print("UpdateBillingGroup OK IPD")
             cur.close()
             conn.close()
+
+
+# Map LabFu
+
+    def selectItemMapLapFu(self):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+        select item_code, common_name, item_id,case when item.map_labfu is not null then map_labfu.id||' | '||map_labfu.name else 'False' end as map_labfu 
+        from item 
+        left join map_labfu on item.map_labfu = map_labfu.id
+        where  active = '1'
+        """
+        cur.execute(sql) # Execute the SQL
+        list_Item = cur.fetchall()
+        cur.close()
+        conn.close()
+        return list_Item
+
+    def selectItemNhsoLabFu(self):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+            select * from map_labfu
+        """
+        cur.execute(sql) # Execute the SQL
+        list_Item = cur.fetchall()
+        cur.close()
+        conn.close()
+        return list_Item
+    
+    def editNhsoLabFu(self, id):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+            select item_code, common_name, item_id,map_labfu from item where item_id = '{}'
+        """.format(id)
+        cur.execute(sql) # Execute the SQL
+        list_editNhsoLabFu = cur.fetchall()
+        cur.close()
+        conn.close()
+        return list_editNhsoLabFu
+
+    def updateNhsoLabFu(self, item_id, id):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+            update item set map_labfu = '{}' where item_id = '{}'
+        """.format(id, item_id)
+        cur.execute(sql) # Execute the SQL
+        conn.commit()
+        print("updateNhsoLabFu OK ")
+        cur.close()
+        conn.close()

@@ -1,0 +1,73 @@
+{% extends "base_2.html" %}
+{%  block content  %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>{{ title }}</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">{{ title }}</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                      <th>รหัส</th>
+                      <th>รายการ Item</th>
+                      <th>NHSO LabFu</th>
+                      <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {% for row in list_Items %}
+                    <tr>
+                      <td>{{ row[0] }}</td>
+                      <td>{{ row[1] }}</td>
+                      {% if row[3] != 'False' and row[3] != None %}
+                        <td class="text-success">{{ row[3] }}</td>
+                        {% else %}
+                        <td class="text-danger"> ยังไม่ได้จับคู่ </td>
+                      {% endif %} 
+                      <td class="text-center py-0 align-middle">
+                        <div class="btn-group btn-group-sm">
+                          <a href="/edit_mapLapFu/{{ row[2] }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                          <a href="/delete_mapLapFu/{{ row[2] }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        </div>
+                      </td>
+                    </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            
+            <!-- /.col -->
+          </div>
+          
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+</div>
+    <!-- /.content -->
+  <!-- /.content-wrapper -->
+{% endblock content %}

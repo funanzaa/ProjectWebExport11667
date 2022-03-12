@@ -114,3 +114,28 @@ def delete_billing_group(typename, id):
     db = Database()
     db.UpdateBillingGroup('', id, typename)
     return redirect(url_for('billing_group'))
+
+# map lapfu
+@app.route("/mapLapFu" , methods=['GET', 'POST'])
+def mapLapFu():
+    db = Database()
+    list_Item = db.selectItemMapLapFu()
+    return render_template('labfu.html',title='จับคู่ LabFu', list_Items = list_Item)
+
+
+@app.route("/edit_mapLapFu/<id>", methods=['GET', 'POST'])
+def edit_mapLapFu(id):
+    db = Database()
+    list_nhsoLabFu = db.selectItemNhsoLabFu()
+    list_editLabFu = db.editNhsoLabFu(id)
+    if request.method == 'POST':
+        id_nhsoLabFu = request.form["idLabFu"]
+        db.updateNhsoLabFu(id, id_nhsoLabFu)
+        return redirect(url_for('mapLapFu'))
+    return render_template('pages/edit_labfu.html',title = 'Nhso LabFu', list_nhsoLabFu = list_nhsoLabFu, list_editLabFu = list_editLabFu)
+
+@app.route("/delete_mapLapFu/<id>", methods=['GET', 'POST'])
+def delete_mapLapFu(id):
+    db = Database()
+    db.updateNhsoLabFu(id, '')
+    return redirect(url_for('mapLapFu'))
