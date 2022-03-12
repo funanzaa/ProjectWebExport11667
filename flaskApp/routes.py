@@ -169,3 +169,9 @@ def UpdateMatchFeeSchedule(item_rn, id):
     db = Database()
     db.UpdateMatchFeeSchedule(item_rn, id)
     return redirect(url_for('ListMatchFeeSchedule'))
+
+@app.route("/DeleteMatchFeeSchedule/<id>", methods=['GET', 'POST'])
+def DeleteMatchFeeSchedule(id):
+    db = Database()
+    db.DeleteMatchFeeSchedule(id)
+    return redirect(url_for('ListMatchFeeSchedule'))

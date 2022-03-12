@@ -315,4 +315,16 @@ class Database:
         cur.close()
         conn.close()
 
+    def DeleteMatchFeeSchedule(self, item_id):
+        conn = self.get_db_connection()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        sql = """
+            update item set pcp_item_rn = null, pcp_item_update_date = null where item_id = '{}'
+        """.format(item_id)
+        cur.execute(sql) # Execute the SQL
+        conn.commit()
+        print("DeleteMatchFeeSchedule OK ")
+        cur.close()
+        conn.close()
+
 
