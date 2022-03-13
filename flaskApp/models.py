@@ -1,19 +1,26 @@
 from datetime import datetime
 from flaskApp import db
-from flask_login import UserMixin
 
 
 
-class Student(db.Model):
-    __tablename__ = 'students'
-    id=db.Column(db.Integer,primary_key=True)
-    fname=db.Column(db.String(40))
-    lname=db.Column(db.String(40))
-    email=db.Column(db.String(40))
+class web_user(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    password = db.Column(db.String(60), nullable=False)
+    posts = db.relationship('Post', backref='author', lazy=True)
 
-    # def __repr__(self):
-    #     return f"Student('{self.fname}', '{self.lname}', '{self.email}')"
-    def __init__(self,fname,lname,email):
-        self.fname=fname
-        self.lname=lname
-        self.email=email
+    def __repr__(self):
+        return f"web_user('{self.username}', '{self.email}', '{self.image_file}')"
+
+
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    content = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('web_user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Post('{self.title}', '{self.date_posted}')"

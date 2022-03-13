@@ -1,7 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify, make_response
-from flaskApp.forms import  LoginForm
-from flaskApp import app
-from flaskApp.models import Student
+from flaskApp.forms import  LoginForm, RegistrationForm
+from flaskApp import app, db, bcrypt
 from flaskApp.database import Database
 # import psycopg2
 # import psycopg2.extras
@@ -27,18 +26,26 @@ posts = [
 def home():
     return render_template('home.html',title='Home' , posts=posts)
 
-
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
         if form.username.data == 'admin' and form.password.data == 'demo':
-            # flash('You have been logged in!', 'success')
+            flash('You have been logged in!', 'success')
             return redirect(url_for('home'))
         else:
-            pass
+            flash('Login Unsuccessful. Please check username and password', 'danger')
     return render_template('login.html', title='Login', form=form)
+
+
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'Account created for {form.username.data}!','success')
+        return redirect(url_for('home'))
+    return render_template('register.html', title='Register', form= form)
 
 # HighCost
 @app.route("/highCost" , methods=['GET', 'POST'])

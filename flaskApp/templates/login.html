@@ -26,10 +26,12 @@
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <form method="POST" action="">
+      <form action="" method="POST" >
         {{ form.hidden_tag() }}
+
+        <!-- {{ form.csrf_token }} -->
         <div class="input-group mb-3">
-          {{ form.username(class="form-control", placeholder="username") }} 
+          {{ form.username(class="form-control") }} 
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -37,33 +39,30 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          {{ form.password(class="form-control", placeholder="password") }} 
+          {{ form.password(class="form-control") }} 
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
             </div>
           </div>
         </div>
-      
 
-      <div class="social-auth-links text-center mb-3">
-        <!-- <a href="#" class="btn btn-block btn-primary"> -->
-          <!-- <i class="fas fa-sign-in-alt"></i> Log in -->
-        <!-- </a> -->
+      <div class="social-auth-links text-center">
         {{  form.submit(class="btn btn-block btn-primary")  }}
-        <!-- {{ form.submit(class="btn btn-outline-info") }} -->
       </div>
     </form>
-      <!-- <p class="login-box-msg">Sign in to start your session</p> -->
       <div class="login-box-msg">
-        <!-- {% with messages = get_flashed_messages(with_categories=true) %} -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
             {% for category, message in messages %}
               <p class="text-{{ category }}">{{ message }}</p>
             {% endfor %}
           {% endif %}
-        <!-- {% endwith %} -->
+        {% endwith %}
       </div>
+      <p class="mb-0">
+        <a href="#" class="text-center">Register a new membership</a>
+      </p>
       <!-- /.social-auth-links -->
     </div>
     <!-- /.login-card-body -->
