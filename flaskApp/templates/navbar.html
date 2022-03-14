@@ -18,7 +18,11 @@
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown user-menu">
         <li class="user-footer">
-          <a href="#" class="btn btn-default btn-flat float-right">Sign out</a>
+          {% if current_user.is_authenticated %} 
+          <a href="{{ url_for('logout')  }}" class="btn btn-block btn-outline-danger btn-flat">Sign out</a>
+          {% else %}
+          <a href="{{ url_for('login')  }}" class="btn btn-block btn-outline-info btn-flat">Login</a>
+          {% endif %}
         </li>
       </li>
     </ul>

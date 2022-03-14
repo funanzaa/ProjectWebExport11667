@@ -45,7 +45,11 @@
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown user-menu">
         <li class="user-footer">
-          <a href="#" class="btn btn-default btn-flat float-right">Sign out</a>
+          {% if current_user.is_authenticated %} 
+          <a href="{{ url_for('logout')  }}" class="btn btn-block btn-outline-danger btn-flat">Sign out</a>
+          {% else %}
+          <a href="{{ url_for('login')  }}" class="btn btn-block btn-outline-info btn-flat">Login</a>
+          {% endif %}
         </li>
       </li>
     </ul>
@@ -64,8 +68,14 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <!-- Sidebar Menu -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{ url_for('static', filename='dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="" class="d-block">{{ current_user.username }}</a>
+        </div>
+      </div>
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
